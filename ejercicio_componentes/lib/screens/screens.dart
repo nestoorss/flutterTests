@@ -1,3 +1,8 @@
+export 'package:ejercicio_componentes/screens/listview_builder_screen.dart';
+export 'package:ejercicio_componentes/screens/slider_screen.dart';
+export 'package:ejercicio_componentes/screens/inputs_screen.dart';
+export 'package:ejercicio_componentes/screens/animated_screen.dart';
+export 'package:ejercicio_componentes/screens/avatar_screen.dart';
 export 'package:ejercicio_componentes/screens/home_screen.dart';
 export 'package:ejercicio_componentes/screens/alert_screen.dart';
 export 'package:ejercicio_componentes/screens/card_screen.dart';
