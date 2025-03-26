@@ -1,6 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 class ProductImage extends StatelessWidget {
+
+  final String? url;
+
+  const ProductImage({super.key, this.url});
 
   @override
   Widget build(BuildContext context) {
@@ -10,12 +16,11 @@ class ProductImage extends StatelessWidget {
         decoration: _buildBoxDecoration(),
         width: double.infinity,
         height: 450,
-        child: ClipRRect(
-          borderRadius: BorderRadius.only(topLeft: Radius.circular(45), topRight: Radius.circular(45)),
-          child: FadeInImage(
-            placeholder: AssetImage("assets/jar-loading.gif"),
-            image: NetworkImage("https://www.laminationsonline.com/wp-content/uploads/2019/03/placeholder-400x300.png"),
-            fit: BoxFit.cover,
+        child: Opacity(
+          opacity: 0.8,
+          child: ClipRRect(
+            borderRadius: BorderRadius.only(topLeft: Radius.circular(45), topRight: Radius.circular(45)),
+            child: getImage(url),
           ),
         )
       ),
@@ -23,7 +28,7 @@ class ProductImage extends StatelessWidget {
   }
 
   BoxDecoration _buildBoxDecoration() => BoxDecoration(
-    color: Colors.red,
+    color: Colors.black,
     borderRadius: BorderRadius.only(topLeft: Radius.circular(45), topRight: Radius.circular(45)),
     boxShadow: [
       BoxShadow(
@@ -34,4 +39,25 @@ class ProductImage extends StatelessWidget {
       )
     ]
   );
+
+  Widget getImage(String? picture) {
+    if (picture == null)
+      return Image(
+        image: AssetImage('assets/no-image.png'), 
+        fit: BoxFit.cover
+      );
+
+    if (picture.startsWith('http') || picture.startsWith('https'))
+      return FadeInImage(
+        placeholder: AssetImage("assets/jar-loading.gif"),
+        image: NetworkImage(url!),
+        fit: BoxFit.cover,
+      );
+
+    return Image.file(
+      File(picture),
+      fit: BoxFit.cover,
+    );
+               
+  }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:formulario/models/product.dart';
 import 'package:formulario/providers/product_service.dart';
 import 'package:formulario/screens/screens.dart';
 import 'package:formulario/widgets/widgets.dart';
@@ -20,13 +21,19 @@ class HomeScreen extends StatelessWidget {
       body: ListView.builder(
         itemCount: productsService.products.length,
         itemBuilder: (BuildContext context, int index) => GestureDetector(
-          onTap: () => Navigator.pushNamed(context, "details"),
+          onTap: () {
+            productsService.selectedProduct = productsService.products[index].copy();
+            Navigator.pushNamed(context, "details");
+          },
           child: ProductCard(product: productsService.products[index])
         ),
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add, color: Colors.white),
-        onPressed: () {}
+        onPressed: () {
+          productsService.selectedProduct = new Product(available: true, name: "", price: 0);
+          Navigator.pushNamed(context, "details");
+        }
       )
     );
   }

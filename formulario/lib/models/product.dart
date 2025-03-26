@@ -11,7 +11,8 @@ class Product {
         required this.available,
         required this.name,
         this.picture,
-        required this.price,
+        required this.price, 
+        this.id,
     });
 
     factory Product.fromJson(String str) => Product.fromMap(json.decode(str));
@@ -31,4 +32,13 @@ class Product {
         "picture": picture,
         "price": price,
     };
+
+    Product copy() => Product(
+      available: this.available,
+      name: this.name,
+      picture: this.picture,
+      price: this.price,
+      id: this.id,
+    );
+
 }
