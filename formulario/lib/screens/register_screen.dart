@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:formulario/providers/login_form_provider.dart';
-import 'package:formulario/providers/providers.dart';
 import 'package:formulario/ui/input_decorations.dart';
 import 'package:provider/provider.dart';
+import '../providers/providers.dart';
 import '../widgets/widgets.dart';
 
-class LoginScreen extends StatelessWidget {
+class RegisterScreen extends StatelessWidget {
    
-  const LoginScreen({super.key});
+  const RegisterScreen({super.key});
   
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class LoginScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     SizedBox(height: 10,),
-                    Text("Login", style: Theme.of(context).textTheme.headlineMedium),
+                    Text("Crear cuenta", style: Theme.of(context).textTheme.headlineMedium),
                     SizedBox(height: 30),
                     ChangeNotifierProvider(
                       create: (_) => LoginFormProvider(),
@@ -33,14 +33,14 @@ class LoginScreen extends StatelessWidget {
 
               SizedBox(height: 50),
               TextButton(
-                onPressed: () => Navigator.pushReplacementNamed(context, "register"), 
+                onPressed: () => Navigator.pushReplacementNamed(context, "login"), 
                 style: ButtonStyle(
                   // ignore: deprecated_member_use
                   overlayColor: MaterialStateProperty.all(Colors.indigo.withOpacity(0.1)),
                   // ignore: deprecated_member_use
                   shape: MaterialStateProperty.all(StadiumBorder())
                 ),
-                child: Text("Crear una nueva cuenta", style: TextStyle(fontSize: 18, color: Colors.black87)),
+                child: Text("¿Ya tienes una cuenta?", style: TextStyle(fontSize: 18, color: Colors.black87)),
               ),
               SizedBox(height: 50),
             ],
@@ -116,12 +116,13 @@ class _LoginForm extends StatelessWidget {
 
                 loginForm.isLoading = true;
                 
-                final String? errorMessage = await authService.login(loginForm.email, loginForm.password);
+                // TODO: validar si el login es correcto
+                final String? errorMessage = await authService.createUser(loginForm.email, loginForm.password);
                 if (errorMessage == null) {
                   Navigator.pushReplacementNamed(context, 'home');
                 } else {
+                  // TODO: mostrar error en pantalla
                   print(errorMessage);
-                  NotificationsService.showSnackbar(errorMessage);
                   loginForm.isLoading = false;
                 }
               },
