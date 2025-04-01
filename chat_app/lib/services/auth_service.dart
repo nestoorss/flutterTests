@@ -25,7 +25,7 @@ class AuthService with ChangeNotifier {
   static Future<String> getToken() async {
     final _storage = FlutterSecureStorage();
     final token = await _storage.read(key: 'token');
-    return token!;
+    return token ?? "";
   }
 
   static Future<void> deleteToken() async {
@@ -73,7 +73,7 @@ class AuthService with ChangeNotifier {
     final resp = await http.get(uri,
       headers: {
         'Content-Type': 'application/json',
-        'x-token': token!
+        'x-token': token ?? ""
       }
     );
 
