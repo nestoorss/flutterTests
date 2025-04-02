@@ -1,6 +1,8 @@
 import 'package:chat_app/models/usuario.dart';
 import 'package:chat_app/services/auth_service.dart';
+import 'package:chat_app/services/chat_service.dart';
 import 'package:chat_app/services/socket_service.dart';
+import 'package:chat_app/services/usuarios_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -12,14 +14,16 @@ class UsuariosPage extends StatefulWidget {
 
 class _UsuariosPageState extends State<UsuariosPage> {
 
+  final usuarioService = UsuariosService();
   RefreshController _refreshController = RefreshController(initialRefresh: false);
 
-  final usuarios = [
-    Usuario(uid: "2", nombre: "Irenika", email: "test2@test.com", online: true),
-    Usuario(uid: "3", nombre: "Silvi", email: "test3@test.com", online: false),
-    Usuario(uid: "4", nombre: "Huesitos", email: "test4@test.com", online: true),
-    Usuario(uid: "5", nombre: "Alebozek", email: "test5@test.com", online: false),
-  ];
+  List<Usuario> usuarios = [];
+
+  @override
+  void initState() {
+    super.initState();
+    this._cargarUsuarios();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -83,12 +87,18 @@ class _UsuariosPageState extends State<UsuariosPage> {
             color: usuario.online ? Colors.green[300] : Colors.red,
             borderRadius: BorderRadius.circular(100)
           ),
-        )
+        ),
+        onTap: () {
+          final chatService = Provider.of<ChatService>(context, listen: false);
+          chatService.usuarioPara = usuario;
+          Navigator.pushNamed(context, "chat");
+        },
       );
   }
 
   _cargarUsuarios() async {
-    await Future.delayed(Duration(milliseconds: 1000));
+    usuarios = await usuarioService.getUsuarios();
+    setState((){});
     _refreshController.refreshCompleted();
   }
 }
