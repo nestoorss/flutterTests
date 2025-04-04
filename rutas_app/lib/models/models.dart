@@ -1,0 +1,1 @@
+export 'package:rutas_app/models/search_result.dart';

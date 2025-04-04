@@ -11,6 +11,10 @@
         android:label="rutas_app"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+
+        <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="AIzaSyBW0BMlmG8JPmX6lMBL8NncFKUDImfFx3Y"/>
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
