@@ -1,0 +1,1 @@
+export 'package:google_pay_app/widgets/total_pay_button.dart';
